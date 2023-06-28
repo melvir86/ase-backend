@@ -9,7 +9,7 @@ from flaskr.db import get_db
 import folium
 import json
 from flask import jsonify
-
+# Hi
 bp = Blueprint('card', __name__)
 
 @bp.route('/')
