@@ -37,26 +37,26 @@ def create_app(test_config=None):
 
     # apply the blueprints to the app
 
-    from . import auth
-    app.register_blueprint(auth.bp)
+    #from . import auth
+    #app.register_blueprint(auth.bp)
 
     from . import card
     app.register_blueprint(card.bp)
 
-    from . import feedback
-    app.register_blueprint(feedback.bp)
+    #from . import feedback
+    #app.register_blueprint(feedback.bp)
 
-    from . import booking
-    app.register_blueprint(booking.bp)
+    #from . import booking
+    #app.register_blueprint(booking.bp)
 
-    from . import job
-    app.register_blueprint(job.bp)
+    #from . import job
+    #app.register_blueprint(job.bp)
 
-    from . import book
-    app.register_blueprint(book.bp)
+    #from . import book
+    #app.register_blueprint(book.bp)
 
-    from . import car
-    app.register_blueprint(car.bp)
+    #from . import car
+    #app.register_blueprint(car.bp)
 
 
     # make url_for('index') == url_for('blog.index')
