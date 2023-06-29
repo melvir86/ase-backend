@@ -22,7 +22,7 @@ def listCard():
 
     cards = db.execute(
         'SELECT *'
-        ' FROM card c JOIN user u ON c.user_id = u.id'
+        ' FROM car c JOIN user u ON c.user_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
 

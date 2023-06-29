@@ -43,6 +43,10 @@ def create_app(test_config=None):
     from . import card
     app.register_blueprint(card.bp)
 
+
+    from . import booking
+    app.register_blueprint(booking.bp)
+
     #from . import feedback
     #app.register_blueprint(feedback.bp)
 
