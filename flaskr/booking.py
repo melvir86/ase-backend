@@ -21,11 +21,13 @@ def index():
 @bp.route('/api/showCars', methods=('GET', 'POST'))
 def showCars():
     db = get_db()
+    try:
+        cars = db.execute(
+            'SELECT *'
+            ' FROM car'
+            ' ORDER BY created DESC'
+        ).fetchall()
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e.args[0]}")
 
-    cars = db.execute(
-        'SELECT *'
-        ' FROM car c JOIN user u ON c.user_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-
-    return json.dumps([dict(ix) for ix in cars], indent=4, sort_keys=True, default=str)
+    return json.dumps([dict(ix) for ix in cars], indent=4, sort_keys=True, default=str) 
