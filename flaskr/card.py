@@ -18,12 +18,15 @@ def index():
 
 @bp.route('/api/listCard', methods=('GET', 'POST'))
 def listCard():
+    uid = request.args.get('uid')
     db = get_db()
 
     cards = db.execute(
         'SELECT *'
         ' FROM card c JOIN user u ON c.user_id = u.id'
-        ' ORDER BY created DESC'
+        ' WHERE c.user_id = ?'
+        #' ORDER BY created DESC'
+        (uid,)
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in cards], indent=4, sort_keys=True, default=str)

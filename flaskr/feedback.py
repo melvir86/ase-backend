@@ -18,12 +18,15 @@ def index():
 
 @bp.route('/api/listFeedback', methods=('GET', 'POST'))
 def listFeedback():
+    uid = request.args.get('uid')
     db = get_db()
 
     feedbacks = db.execute(
         'SELECT *'
         ' FROM feedback c JOIN user u ON c.user_id = u.id'
-        ' ORDER BY created DESC'
+        ' WHERE c.user_id = ?'
+        #' ORDER BY created DESC'
+        (uid,)
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in feedbacks], indent=4, sort_keys=True, default=str)
