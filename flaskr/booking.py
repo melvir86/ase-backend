@@ -63,6 +63,6 @@ def bookcar():
         updated_booking_dictionary['destination'] = destination
         updated_booking_dictionary['status'] = 'booked'
 
-        return jsonify({'success': True, 'message': 'Car booked and waiting for acceptance by the driver', 'booking': updated_booking_dict})
+        return jsonify({'success': True, 'message': 'Car booked and waiting for acceptance by the driver', 'booking': updated_booking_dictionary})
     except Exception as e:
         return jsonify({'success': False, 'message': 'Booking failed.Sorry !', 'error': str(e)})
