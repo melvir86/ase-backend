@@ -9,6 +9,7 @@ from flaskr.db import get_db
 import folium
 import json
 from flask import jsonify
+from flaskr.db import get_db
 
 
 bp = Blueprint('booking', __name__)
@@ -34,19 +35,34 @@ def showCars():
 def bookcar():
     db = get_db()
     try:
+        db = get_db()
+
         source = request.json['source']
         destination = request.json['destination']
-        
+
         # Fetch an available car for booking
-        
-        car_id=db.execute("SELECT car_id FROM booking WHERE status = 'available' LIMIT 1").fetchone()[0]
-        
-        # Update car status, source, and destination
+        booking = db.execute("SELECT * FROM booking WHERE status = 'available' ORDER BY RANDOM() LIMIT 1").fetchone()
+
+        if booking is None:
+            return jsonify({'success': False, 'message': 'No available car for you ....!'})
+
+        car_id = booking['car_id']
+
+        # Update booking status, source, and destination
         db.execute("UPDATE booking SET status = 'booked', source = ?, destination = ? WHERE car_id = ?", (source, destination, car_id))
         db.commit()
-        
-        booking = db.execute("SELECT * FROM booking WHERE car_id = ?", (car_id,)).fetchone()
 
-        return jsonify({'success': True, 'message': 'Car booked and waiting for accepting', 'booking': dict(booking)})
+        # Get the updated booking 
+        updated_booking = db.execute("SELECT * FROM booking WHERE id = ?", (booking['id'],)).fetchone()
+
+        # Convert the row object to a dictionary
+        updated_booking_dictionary = dict(updated_booking)
+
+        # Update the values 
+        updated_booking_dictionary['source'] = source
+        updated_booking_dictionary['destination'] = destination
+        updated_booking_dictionary['status'] = 'booked'
+
+        return jsonify({'success': True, 'message': 'Car booked and waiting for acceptance by the driver', 'booking': updated_booking_dict})
     except Exception as e:
-         return jsonify({'success': False, 'message': 'Booking failed', 'error': str(e)})
+        return jsonify({'success': False, 'message': 'Booking failed.Sorry !', 'error': str(e)})
