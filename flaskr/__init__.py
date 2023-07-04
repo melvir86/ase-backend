@@ -52,6 +52,9 @@ def create_app(test_config=None):
     from . import job
     app.register_blueprint(job.bp)
 
+    from . import rating
+    app.register_blueprint(rating.bp)
+
     #from . import book
     #app.register_blueprint(book.bp)
 
