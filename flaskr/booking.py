@@ -66,3 +66,39 @@ def bookcar():
         return jsonify({'success': True, 'message': 'Car booked and waiting for acceptance by the driver', 'booking': updated_booking_dictionary})
     except Exception as e:
         return jsonify({'success': False, 'message': 'Booking failed.Sorry !', 'error': str(e)})
+
+@bp.route('/api/listRequests', methods=('GET', 'POST'))
+def listRequests():
+    db = get_db()
+
+    customer_requests = db.execute(
+        'SELECT *'
+        ' FROM booking b'
+        ' WHERE b.status = "Booked"'
+        #' ORDER BY created DESC'
+    ).fetchall()
+
+    return json.dumps([dict(ix) for ix in customer_requests], indent=4, sort_keys=True, default=str)
+
+@bp.route('/api/<int:id>/acceptJob', methods=('POST',))
+def acceptJob(id):
+    car_id = request.args.get('carid')
+
+    db = get_db()
+    #db.execute('UPDATE booking SET status = "Booked", car_id = ? WHERE id = ?', (1, id,))
+    db.execute('UPDATE booking SET status = "Accepted by Driver", car_id = ? WHERE id = ?', (car_id, id,))
+    db.commit()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@bp.route('/api/<int:id>/getCarId', methods=('GET', 'POST',))
+def getCarId(id):
+    db = get_db()
+
+    car_id = get_db().execute(
+        'SELECT id'
+        ' FROM car c'
+        ' WHERE c.user_id = ?',
+        (id,)
+    ).fetchall()
+
+    return json.dumps([dict(ix) for ix in car_id], indent=4, sort_keys=True, default=str)
