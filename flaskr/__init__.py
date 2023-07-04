@@ -55,11 +55,13 @@ def create_app(test_config=None):
     from . import rating
     app.register_blueprint(rating.bp)
 
+    from . import car
+    app.register_blueprint(car.bp)
+
     #from . import book
     #app.register_blueprint(book.bp)
 
-    #from . import car
-    #app.register_blueprint(car.bp)
+
 
 
     # make url_for('index') == url_for('blog.index')

@@ -24,7 +24,7 @@ def listFeedback():
     feedbacks = db.execute(
         'SELECT *'
         ' FROM feedback c JOIN user u ON c.user_id = u.id'
-        ' WHERE c.user_id = ?'
+        ' WHERE c.user_id = ?',
         #' ORDER BY created DESC'
         (uid,)
     ).fetchall()
