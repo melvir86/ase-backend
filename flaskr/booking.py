@@ -44,16 +44,6 @@ def bookcar():
     source = request.json['source']
     destination = request.json['destination']
 
-    # Fetch an available car for booking
-    #booking = db.execute("SELECT * FROM booking WHERE status = 'available' ORDER BY RANDOM() LIMIT 1").fetchone()
-
-    #if booking is None:
-    #    return jsonify({'success': False, 'message': 'No available car for you ....!'})
-
-    #car_id = booking['car_id']
-
-    # Insering into booking table with correct status, source, and destination
-    #db.execute("UPDATE booking SET status = 'booked', source = ?, destination = ? WHERE car_id = ?", (source, destination, car_id))
     db.execute(
         'INSERT INTO booking (user_id, source, destination, cost, status)'
         ' VALUES (?, ?, ?, ?, ?)',
@@ -67,20 +57,9 @@ def bookcar():
         ' ORDER BY b.created DESC LIMIT 1'
     ).fetchall()
 
-    # Get the updated booking 
-    #updated_booking = db.execute("SELECT * FROM booking WHERE id = ?", (booking['id'],)).fetchone()
-
-    # Convert the row object to a dictionary
-    #updated_booking_dictionary = dict(updated_booking)
-
-    # Update the values 
-    #updated_booking_dictionary['source'] = source
-    #updated_booking_dictionary['destination'] = destination
-    #updated_booking_dictionary['status'] = 'booked'
-
+   
     return json.dumps([dict(ix) for ix in booking], indent=4, sort_keys=True, default=str)
-    #return json.dumps({'success': True, 'message': 'Car booked and waiting for acceptance by the driver'}), 201, {'ContentType':'application/json'}
-
+    
 @bp.route('/api/listRequests', methods=('GET', 'POST'))
 def listRequests():
     db = get_db()
@@ -149,3 +128,27 @@ def listBookings():
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in booking_history], indent=4, sort_keys=True, default=str)
+
+
+@bp.route('/api/updatePosition', methods=('GET', 'POST'))
+def updatePosition():
+    db = get_db()
+    # Get source_x and source_y from the payload
+    source_x = request.json.get('source_x')
+    source_y = request.json.get('source_y')
+    
+    # Update pos_x and pos_y where status is 'Accepted by Driver'
+    db.execute(
+        'UPDATE booking SET pos_x = ?, pos_y = ? WHERE status = "Accepted by Driver"',
+        (source_x, source_y)
+    )
+    db.commit()
+
+    # Get the updated rows
+    updated_rows = db.execute(
+        'SELECT * FROM booking WHERE pos_x = ? AND pos_y = ? AND status = "Accepted by Driver"',
+        (source_x, source_y)
+    ).fetchall()
+
+    # Return the updated rows
+    return jsonify(updated_rows), 200
