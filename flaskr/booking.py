@@ -131,3 +131,21 @@ def getCarId(id):
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in car_id], indent=4, sort_keys=True, default=str)
+
+@bp.route('/api/listBookings', methods=('GET', 'POST'))
+def listBookings():
+    db = get_db()
+
+    uid = request.args.get('uid')
+    db = get_db()
+
+    booking_history = db.execute(
+        'SELECT *'
+        ' FROM booking b'
+        ' JOIN user u ON b.user_id = u.id'
+        ' WHERE b.user_id = ?'
+        ' ORDER BY b.created DESC',
+        (uid,)
+    ).fetchall()
+
+    return json.dumps([dict(ix) for ix in booking_history], indent=4, sort_keys=True, default=str)

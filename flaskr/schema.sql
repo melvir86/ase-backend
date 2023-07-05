@@ -64,15 +64,20 @@ CREATE TABLE car (
 
 -- Preparing sample data before we develop the feature
 
--- INSERT INTO user (username, password, role) VALUES ('DriverJohn', 'pbkdf2:sha256:600000$D3xjfdhmDCJdqryz$a1d808145d325d04d4f2715be6876f6829065cbeb32a0824e6b3a998758aa3a8', 'Driver');
+INSERT INTO user (username, password, role) VALUES ('DriverJohn', '42f749ade7f9e195bf475f37a44cafcb', 'Driver');
 
--- INSERT INTO user (username, password, role) VALUES ('DriverRobert', 'pbkdf2:sha256:600000$aDCwIjzhwoJDCpZ2$7d5f165d9263d450bdc092d2969074b51b030285e734d7955ccb84ed199ebfa1', 'Driver');
+INSERT INTO user (username, password, role) VALUES ('DriverRobert', '42f749ade7f9e195bf475f37a44cafcb', 'Driver');
 
--- INSERT INTO user (username, password, role) VALUES ('Mary', 'pbkdf2:sha256:600000$3ZBsWIwwmR8o40VJ$0545998d859e9a967d1bdd0b60076e1a7fe3a3a78e76ec69d1274608341aef12', 'Customer');
+INSERT INTO user (username, password, role) VALUES ('Mary', '42f749ade7f9e195bf475f37a44cafcb', 'Customer');
+
+INSERT INTO user (username, password, role) VALUES ('Johnny', '42f749ade7f9e195bf475f37a44cafcb', 'Customer');
+
+INSERT INTO user (username, password, role) VALUES ('Alan', '42f749ade7f9e195bf475f37a44cafcb', 'Provider');
 
 INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (1, 'Mazda', '3 Hb', 'Red', '23/06/2023', 'Active','50','42',8);
 
 INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (2, 'Mazda', '6', 'Blue', '23/12/2023', 'Active','42','54',7);
 
-INSERT INTO booking (user_id, car_id, source, destination, cost, status) VALUES (3, 1, 'Wembley Park', 'Euston Square', '$10.50', 'available');
-INSERT INTO booking (user_id, car_id, source, destination, cost, status) VALUES (3, 2, 'Picadilly Circus', 'Goodge Street', '$7.50', 'available');
+INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Wembley Park', 'Euston Square', '$10.50', 'Booked');
+
+INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Picadilly Circus', 'Goodge Street', '$7.50', 'Booked');
