@@ -134,21 +134,46 @@ def listBookings():
 def startBooking():
     db = get_db()
     # Get source_x and source_y from the payload
+    booking_id = request.json.get('booking_id')
     source_x = request.json.get('source_x')
     source_y = request.json.get('source_y')
-    
-    # Update pos_x and pos_y where status is 'Accepted by Driver'
+    car_id = request.json.get('car_id')
+
+    print("Source is ", source_x, source_y)
+
+    # Step 1 - Update booking table status'
+    db.execute('UPDATE booking SET status = "Started" WHERE id = ?', (booking_id,))
+    db.commit()
+
+    # Step 2 - Update car table pos_x and pos_y'
     db.execute(
-        'UPDATE car SET pos_x = ?, pos_y = ? WHERE status = "Accepted by Driver"',
-        (source_x, source_y)
+        'UPDATE car SET pos_x = ?, pos_y = ? WHERE id = ?',
+        (source_x, source_y, car_id,)
     )
     db.commit()
 
-    # Get the updated rows
-    updated_rows = db.execute(
-        'SELECT * FROM booking WHERE pos_x = ? AND pos_y = ? AND status = "Accepted by Driver"',
-        (source_x, source_y)
-    ).fetchall()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
-    # Return the updated rows
-    return jsonify(updated_rows), 200
+@bp.route('/api/completeBooking', methods=('GET', 'POST'))
+def completeBooking():
+    db = get_db()
+    # Get source_x and source_y from the payload
+    booking_id = request.json.get('booking_id')
+    destination_x = request.json.get('destination_x')
+    destination_y = request.json.get('destination_y')
+    car_id = request.json.get('car_id')
+
+    print("Destination is ", destination_x, destination_y)
+
+    # Step 1 - Update booking table status'
+    db.execute('UPDATE booking SET status = "Completed" WHERE id = ?', (booking_id,))
+    db.commit()
+
+    # Step 2 - Update car table pos_x and pos_y'
+    db.execute(
+        'UPDATE car SET pos_x = ?, pos_y = ? WHERE id = ?',
+        (destination_x, destination_y, car_id,)
+    )
+    db.commit()
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
