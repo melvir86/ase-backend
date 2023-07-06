@@ -78,6 +78,6 @@ INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y
 
 INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (2, 'Mazda', '6', 'Blue', '23/12/2023', 'Active','42','54',7);
 
-INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Wembley Park', 'Euston Square', '$10.50', 'Booked');
+--- INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Wembley Park', 'Euston Square', '$10.50', 'Booked');
 
-INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Picadilly Circus', 'Goodge Street', '$7.50', 'Booked');
+--- INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Picadilly Circus', 'Goodge Street', '$7.50', 'Booked');
