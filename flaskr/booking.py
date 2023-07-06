@@ -130,8 +130,8 @@ def listBookings():
     return json.dumps([dict(ix) for ix in booking_history], indent=4, sort_keys=True, default=str)
 
 
-@bp.route('/api/updatePosition', methods=('GET', 'POST'))
-def updatePosition():
+@bp.route('/api/startBooking', methods=('GET', 'POST'))
+def startBooking():
     db = get_db()
     # Get source_x and source_y from the payload
     source_x = request.json.get('source_x')
@@ -139,7 +139,7 @@ def updatePosition():
     
     # Update pos_x and pos_y where status is 'Accepted by Driver'
     db.execute(
-        'UPDATE booking SET pos_x = ?, pos_y = ? WHERE status = "Accepted by Driver"',
+        'UPDATE car SET pos_x = ?, pos_y = ? WHERE status = "Accepted by Driver"',
         (source_x, source_y)
     )
     db.commit()
