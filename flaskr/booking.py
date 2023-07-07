@@ -135,6 +135,7 @@ def listBookings():
         'SELECT *'
         ' FROM booking b'
         ' JOIN user u ON b.user_id = u.id'
+        ' JOIN car c ON b.car_id = c.id'
         ' WHERE b.user_id = ?'
         ' ORDER BY b.created DESC',
         (uid,)
