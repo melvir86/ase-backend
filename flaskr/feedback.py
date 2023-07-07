@@ -24,9 +24,21 @@ def listFeedback():
     feedbacks = db.execute(
         'SELECT *'
         ' FROM feedback c JOIN user u ON c.user_id = u.id'
-        ' WHERE c.user_id = ?',
-        #' ORDER BY created DESC'
+        ' WHERE c.user_id = ?'
+        ' ORDER BY created DESC',
         (uid,)
+    ).fetchall()
+
+    return json.dumps([dict(ix) for ix in feedbacks], indent=4, sort_keys=True, default=str)
+
+@bp.route('/api/listAllFeedback', methods=('GET', 'POST'))
+def listAllFeedback():
+    db = get_db()
+
+    feedbacks = db.execute(
+        'SELECT *'
+        ' FROM feedback c JOIN user u ON c.user_id = u.id'
+        ' ORDER BY created DESC'
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in feedbacks], indent=4, sort_keys=True, default=str)
