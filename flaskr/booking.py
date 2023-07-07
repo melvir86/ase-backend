@@ -111,6 +111,19 @@ def getCarId(id):
 
     return json.dumps([dict(ix) for ix in car_id], indent=4, sort_keys=True, default=str)
 
+@bp.route('/api/<int:id>/getCarDetails', methods=('GET', 'POST',))
+def getCarDetails(id):
+    db = get_db()
+
+    car = db.execute(
+        'SELECT *'
+        ' FROM car c'
+        ' WHERE c.user_id = ?',
+        (id,)
+    ).fetchall()
+
+    return json.dumps([dict(ix) for ix in car], indent=4, sort_keys=True, default=str)
+
 @bp.route('/api/listBookings', methods=('GET', 'POST'))
 def listBookings():
     db = get_db()
@@ -174,6 +187,21 @@ def completeBooking():
         'UPDATE car SET pos_x = ?, pos_y = ? WHERE id = ?',
         (destination_x, destination_y, car_id,)
     )
+    db.commit()
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@bp.route('/api/rateDriver', methods=('GET', 'POST'))
+def rateDriver():
+    db = get_db()
+    # Get source_x and source_y from the payload
+    car_id = request.json.get('car_id')
+    rating = request.json.get('rating')
+
+    print("Booking Id & Rating is is ", car_id, rating)
+
+    # Step 1 - Update booking table status'
+    db.execute('UPDATE car SET rating = ? WHERE id = ?', (rating, car_id,))
     db.commit()
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
