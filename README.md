@@ -18,4 +18,4 @@ This is a shared code repository for Group 3's Applied Software Engineering (ASE
 10. Go to root folder directory --> cd ase-backend
 11. flask --app flaskr init-db
 12. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
-13. Access it from your browser at https://[codio-domainname1]-[codio-domainname2]-5000.codio-box.uk/
+13. Access ase (frontend) from your browser at https://[codio-domainname1]-[codio-domainname2]-5000.codio-box.uk/
