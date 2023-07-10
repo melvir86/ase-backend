@@ -11,11 +11,11 @@ import json
 from flask import jsonify
 
 bp = Blueprint('car', __name__)
-
+#Updating the car details
 @bp.route('/api/listCarDetails', methods=('GET', 'POST'))
 def listCarDetails():
     uid = request.args.get('uid')
-
+#Getting the drivers id to reference its cars.
     db = get_db()
     cars = db.execute(
         'SELECT * FROM car WHERE user_id = ?',
@@ -23,11 +23,11 @@ def listCarDetails():
     ).fetchall()
 
     return json.dumps([dict(ix) for ix in cars], indent=4, sort_keys=True, default=str)
-
+#Creating a new car for the driver.
 @bp.route('/api/createCar', methods=('GET', 'POST'))
 def createCar():
     data = request.get_json()
-
+#Getting all the values from the payload as a form/
     if request.method == 'POST':
         uid = data.get('uid')
         brand = data.get('brand')
@@ -45,6 +45,7 @@ def createCar():
         if error is not None:
             flash(error)
         else:
+            #Updating the form values into the table referencing its own uniqe driver id.
             db = get_db()
             db.execute(
                 'INSERT INTO car (user_id, brand, model, colour, next_service, status, pos_x, pos_y, rating)'
@@ -53,10 +54,10 @@ def createCar():
             )
             db.commit()
             return json.dumps({'success':True}), 201, {'ContentType':'application/json'}
-
+#Get the car of a driver.
 @bp.route('/api/<int:id>/getCar', methods=('GET', 'POST'))
 def getCar(id):
-
+#Getting the data of driver and car as their own common key is id which is passed as a filtering query string to get what car we need.
     car = get_db().execute(
         'SELECT *'
         ' FROM car c JOIN user u ON c.user_id = u.id'
@@ -85,11 +86,11 @@ def get_car_local(id, check_author=True):
         abort(404, f"Car id {id} doesn't exist.")
 
     return car
-
+#Update the car of a driver details.
 @bp.route('/api/<int:id>/updateCar', methods=('GET', 'POST'))
 def updateCar(id):
     data = request.get_json()
-
+#Getting all the data as a payload.
     if request.method == 'POST':
         uid = data.get('uid')
         brand = data.get('brand')
@@ -109,6 +110,7 @@ def updateCar(id):
         if error is not None:
             flash(error)
         else:
+            #updating a specific car form the id of the car.
             db = get_db()
             db.execute(
                 'UPDATE car SET brand = ?, model = ?, colour = ?, next_service = ?, status = ?'
@@ -117,10 +119,11 @@ def updateCar(id):
             )
             db.commit()
             return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
-
+#Delete a specific car form the car table.
 @bp.route('/api/<int:id>/deleteCar', methods=('POST',))
 def deleteCar(id):
     db = get_db()
+    #car id is given by the query string.
     db.execute('DELETE FROM car WHERE id = ?', (id,))
     db.commit()
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
