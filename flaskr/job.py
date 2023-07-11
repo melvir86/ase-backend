@@ -11,11 +11,11 @@ import json
 from flask import jsonify
 
 bp = Blueprint('job', __name__)
-
+#List all the jobs function.
 @bp.route('/api/listJob', methods=('GET', 'POST'))
 def listJob():
     uid = request.args.get('uid')
-
+#getting data from the booking table and car table referencing each other on same key uid.
     db = get_db()
     jobs = db.execute(
         'SELECT *'

@@ -11,13 +11,14 @@ import json
 from flask import jsonify
 
 bp = Blueprint('rating', __name__)
-
+#rating a single driver function.
 @bp.route('/api/driverRating', methods=('GET', 'POST'))
 def driverRating():
     print("Came here")
     uid = request.args.get('uid')
     print("Uid is ", uid)
     db = get_db()
+    #getting the driver rating referencing it specific id.
     car = db.execute(
         'SELECT *'
         ' FROM car c'

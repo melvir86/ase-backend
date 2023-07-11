@@ -69,12 +69,12 @@ def getCar(id):
         abort(404, f"Car id {id} doesn't exist.")
 
     return json.dumps([dict(ix) for ix in car], indent=4, sort_keys=True, default=str)
-
+#Check if the car exist with its own id to a driver.
 def get_car_local(id, check_author=True):
     data = request.get_json()
     if data.get('id'):
         id = data.get('id')
-
+#check all the records from user and car tables joining through common id passed.
     car = get_db().execute(
         'SELECT *'
         ' FROM car c JOIN user u ON c.user_id = u.id'
