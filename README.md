@@ -13,6 +13,7 @@ This is a shared code repository for Group 3's Applied Software Engineering (ASE
 6. pip3.11 install geopy
 7. pip3.11 install folium
 8. pip3.11 install numpy --upgrade
+9. pip3.11 install --upgrade requests
 
 # Starting our application
 10. Go to root folder directory --> cd ase-backend
