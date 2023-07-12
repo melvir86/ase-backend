@@ -90,6 +90,9 @@ def test_list_requests(client, db):
     assert requests[0]['status'] == 'Booked'
 
 
+   
+
+
 
 def test_check_booking(client,db):
    
@@ -136,6 +139,10 @@ def test_accept_job(client, db):
     booking = db.execute('SELECT * FROM booking WHERE id = 7').fetchone()
     assert booking['status'] == 'Accepted by Driver'
     assert booking['car_id'] == 123
+
+    db.execute('DELETE FROM booking WHERE id = 8')
+    db.execute('DELETE FROM booking WHERE user_id = 1')
+    db.commit()
 
 
 
