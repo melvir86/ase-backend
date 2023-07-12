@@ -111,3 +111,24 @@ def test_checkBooking(client):
     assert booking[0]["status"] == 'Accepted by Driver'
     assert booking[0]["user_id"] == 6
     assert booking[0]["source"] == 'Manchester'
+
+def test_checkBooking(client):
+    # Prepare a JSON payload for the request
+
+    # Send a POST request to the bookcar endpoint with the payload
+    response = client.post('/api/7/getCarDetails')
+
+    # Check that the response status code is 200 (OK)
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+
+    # Add additional assertions to validate the response data or behavior
+
+    # Check that the booking was inserted into the database
+    car = json.loads(response.get_data(as_text=True))
+    print(car)
+
+    assert car is not None
+    assert car[0]["brand"] == 'Honda'
+    assert car[0]["colour"] == 'Black'
+    assert car[0]["model"] == 'Civic'
