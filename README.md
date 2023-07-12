@@ -19,11 +19,12 @@ This is a shared code repository for Group 3's Applied Software Engineering (ASE
 10. flask --app flaskr init-db
     
 # How to run Unit Testing for our application
-11. python3.11 -m pytest tests
+11. Go to root folder directory --> cd ase-backend
+12. python3.11 -m pytest tests
 
 # Re-Initializing the Database to clear test data
-12. flask --app flaskr init-db
+13. flask --app flaskr init-db
 
 # Starting our application
-13. Go to root folder directory --> cd ase-backend
-14. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
+14. Go to root folder directory --> cd ase-backend
+15. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
