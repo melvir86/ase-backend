@@ -55,9 +55,11 @@ def bookcar():
     booking = get_db().execute(
         'SELECT *'
         ' FROM booking b'
-        ' ORDER BY b.created DESC LIMIT 1'
-    ).fetchall()
+        ' WHERE b.user_id = ?'
+        ' ORDER BY b.created DESC LIMIT 1',
+        (uid,)
 
+    ).fetchall()
    
     return json.dumps([dict(ix) for ix in booking], indent=4, sort_keys=True, default=str)
 #List the request of bookings with status booked and returnin them as a JSON.    

@@ -74,9 +74,15 @@ INSERT INTO user (username, password, role) VALUES ('Johnny', '42f749ade7f9e195b
 
 INSERT INTO user (username, password, role) VALUES ('Alan', '42f749ade7f9e195bf475f37a44cafcb', 'Provider');
 
+INSERT INTO user (username, password, role) VALUES ('TestUser', '42f749ade7f9e195bf475f37a44cafcb', 'Customer');
+
+INSERT INTO user (username, password, role) VALUES ('TestDriver', '42f749ade7f9e195bf475f37a44cafcb', 'Driver');
+
 INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (1, 'Mazda', '3 Hb', 'Red', '23/06/2023', 'Active','50','42',8);
 
 INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (2, 'Mazda', '6', 'Blue', '23/12/2023', 'Active','42','54',7);
+
+INSERT INTO car (user_id, brand, model, colour, next_service, status,pos_x,pos_y,rating) VALUES (7, 'Honda', 'Civic', 'Black', '23/11/2023', 'Active','45','54',10);
 
 --- INSERT INTO booking (user_id, source, destination, cost, status) VALUES (3, 'Wembley Park', 'Euston Square', '$10.50', 'Booked');
 
