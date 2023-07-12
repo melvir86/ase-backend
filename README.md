@@ -26,5 +26,4 @@ This is a shared code repository for Group 3's Applied Software Engineering (ASE
 
 # Starting our application
 13. Go to root folder directory --> cd ase-backend
-14. flask --app flaskr init-db
-15. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
+14. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
