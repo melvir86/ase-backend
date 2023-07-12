@@ -15,7 +15,16 @@ This is a shared code repository for Group 3's Applied Software Engineering (ASE
 8. pip3.11 install numpy --upgrade
 9. pip3.11 install --upgrade requests
 
+# Initializing the Database
+10. flask --app flaskr init-db
+    
+# How to run Unit Testing for our application
+11. python3.11 -m pytest tests
+
+# Re-Initializing the Database to clear test data
+12. flask --app flaskr init-db
+
 # Starting our application
-10. Go to root folder directory --> cd ase-backend
-11. flask --app flaskr init-db
-12. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
+13. Go to root folder directory --> cd ase-backend
+14. flask --app flaskr init-db
+15. flask --app flaskr run --debug --host=0.0.0.0 --port=8080
