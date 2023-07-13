@@ -15,23 +15,19 @@ def client(app):
     return app.test_client()
 
 
-#Test create card Api.
 
-def test_createCard(client):
-    
+
+def test_createFeedback(client):
+    # Prepare a JSON payload for the request
+    #TestUser ID is 6 in schema
     payload = {
-        'uid' : 6,
-        'name' : 'test',
-        'number' : '12345',
-        'expiry_month': 'June',
-        'expiry_year': '2029',
-        'cve': '123',
-        'description': 'Bla bla',
-        'status': 'Active'
+        'uid': 6,
+        'description': 'This is a desc.',
+        'feedback': 'Very nice ride'
     }
 
     # Send a POST request to the bookcar endpoint with the payload
-    response = client.post('/api/createCard', json=payload)
+    response = client.post('/api/createFeedback', json=payload)
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 201
@@ -40,18 +36,17 @@ def test_createCard(client):
     # Add additional assertions to validate the response data or behavior
 
     # Check that the booking was inserted into the database
-    card = json.loads(response.get_data(as_text=True))
-    #print("Booking response")
+    feedback = json.loads(response.get_data(as_text=True))
     
+    #print(feedback)
 
     assert b'success' in response.data
 
-
-def test_listCard(client):
+def test_listFeedback(client):
     # Prepare a JSON payload for the request
 
     # Send a POST request to the bookcar endpoint with the payload
-    response = client.post('/api/listCard?uid=6')
+    response = client.post('/api/listFeedback?uid=6')
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 200
@@ -60,19 +55,19 @@ def test_listCard(client):
     # Add additional assertions to validate the response data or behavior
 
     # Check that the booking was inserted into the database
-    card = json.loads(response.get_data(as_text=True))
+    feedback = json.loads(response.get_data(as_text=True))
     
 
-    assert card is not None
-    assert card[0]["status"] == 'Active'
-    assert card[0]["user_id"] == 6
-    assert card[0]["cve"] =='123'
+    assert feedback is not None
+    assert feedback[0]["description"] == 'This is a desc.'
+    assert feedback[0]["user_id"] == 6
+    assert feedback[0]["feedback"] == 'Very nice ride'
 
-def test_getCard(client):
+def test_listAllFeedback(client):
     # Prepare a JSON payload for the request
 
     # Send a POST request to the bookcar endpoint with the payload
-    response = client.post('/api/1/getCard')
+    response = client.post('/api/listAllFeedback')
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 200
@@ -81,13 +76,37 @@ def test_getCard(client):
     # Add additional assertions to validate the response data or behavior
 
     # Check that the booking was inserted into the database
-    card = json.loads(response.get_data(as_text=True))
+    feedback = json.loads(response.get_data(as_text=True))
     
 
-    assert card is not None
-    assert card[0]["status"] == 'Active'
-    assert card[0]["user_id"] == 6
-    assert card[0]["cve"] =='123'
+    assert feedback is not None
+    assert feedback[0]["description"] == 'This is a desc.'
+    assert feedback[0]["user_id"] == 6
+    assert feedback[0]["feedback"] == 'Very nice ride'
+
+
+
+def test_getFeedback(client):
+    # Prepare a JSON payload for the request
+
+    # Send a POST request to the bookcar endpoint with the payload
+    response = client.post('/api/1/getFeedback')
+
+    # Check that the response status code is 200 (OK)
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+
+    # Add additional assertions to validate the response data or behavior
+
+    # Check that the booking was inserted into the database
+    feedback = json.loads(response.get_data(as_text=True))
+    
+
+    assert feedback is not None
+    assert feedback[0]["description"] == 'This is a desc.'
+    assert feedback[0]["user_id"] == 6
+    assert feedback[0]["feedback"] == 'Very nice ride'
+
 
 
 def test_updateCard(client):
@@ -95,20 +114,15 @@ def test_updateCard(client):
     #TestUser ID is 6 in schema
    
     payload = {
-        'uid' : 6,
-        'name' : 'test1',
-        'number' : '123456',
-        'expiry_month': 'June',
-        'expiry_year': '2029',
-        'cve': '123',
-        'description': 'Bla bla',
-        'status': 'Active'
+        'uid': 6,
+        'description': 'This is a description.',
+        'feedback_info': 'Very nice ridee'
     }
         
 
     # Send a POST request to the bookcar endpoint with the payload
     
-    response = client.post('/api/1/updateCard', json=payload)
+    response = client.post('/api/1/updateFeedback', json=payload)
     
 
     # Check that the response status code is 201 (OK)
@@ -118,18 +132,17 @@ def test_updateCard(client):
     
 
     # Check that the booking was inserted into the database
-    card = json.loads(response.get_data(as_text=True))
+    feedback= json.loads(response.get_data(as_text=True))
     
 
     assert b'success' in response.data
 
 
-
-def test_deleteCard(client):
+def test_deleteFeedback(client):
     
     
     # Send a POST request to the bookcar endpoint with the payload
-    response = client.post('/api/1/deleteCard')
+    response = client.post('/api/1/deleteFeedback')
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 200
@@ -138,11 +151,11 @@ def test_deleteCard(client):
     # Add additional assertions to validate the response data or behavior
 
     # Check that the booking was inserted into the database
-    card = json.loads(response.get_data(as_text=True))
+    feedback = json.loads(response.get_data(as_text=True))
     #print("Booking response")
     
 
     assert b'success' in response.data
 
-   
-    
+
+

@@ -98,7 +98,7 @@ def test_deleteCar(client):
     assert b'success' in response.data
 
 
-def test_bookcar(client):
+def test_getCar(client):
     
     # Send a POST request to the bookcar endpoint with the payload
     response = client.post('/api/3/getCar')
