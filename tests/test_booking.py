@@ -132,3 +132,81 @@ def test_checkBooking(client):
     assert car[0]["brand"] == 'Honda'
     assert car[0]["colour"] == 'Black'
     assert car[0]["model"] == 'Civic'
+
+
+
+def test_startBooking(client):
+    # Prepare a JSON payload for the request
+    #TestUser ID is 6 in schema
+    payload = {
+            'source_x': 40,
+            'source_y': 59,
+            'car_id': 3,
+            'booking_id':1
+        }
+
+    # Send a POST request to the bookcar endpoint with the payload
+    response = client.post('/api/startBooking', json=payload)
+
+    # Check that the response status code is 200 (OK)
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+        
+         
+
+    
+    booking = json.loads(response.get_data(as_text=True))
+        
+
+    assert b'success' in response.data
+
+
+def test_completeBooking(client):
+    # Prepare a JSON payload for the request
+    #TestUser ID is 6 in schema
+    payload = {
+            'source_x': 45,
+            'source_y': 51,
+            'car_id': 3,
+            'booking_id':1
+        }
+
+    # Send a POST request to the bookcar endpoint with the payload
+    response = client.post('/api/completeBooking', json=payload)
+
+    # Check that the response status code is 200 (OK)
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+        
+         
+
+    
+    booking = json.loads(response.get_data(as_text=True))
+        
+
+    assert b'success' in response.data
+
+def test_rate_driver(client):
+    # Prepare a JSON payload for the request
+    #TestUser ID is 6 in schema
+    payload = {
+        'rating': 7,
+        'car_id': 3
+        
+    }
+
+    # Send a POST request to the bookcar endpoint with the payload
+    response = client.post('/api/rateDriver', json=payload)
+
+    # Check that the response status code is 200 (OK)
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+    
+    # Add additional assertions to validate the response data or behavior
+
+    # Check that the booking was inserted into the database
+    booking = json.loads(response.get_data(as_text=True))
+    
+
+    assert b'success' in response.data
+    
