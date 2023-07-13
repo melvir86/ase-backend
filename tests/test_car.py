@@ -76,7 +76,9 @@ def test_updateCar(client):
         }
 
     # Send a POST request to the bookcar endpoint with the payload
+    
     response = client.post('/api/1/updateCar', json=payload)
+    
 
     # Check that the response status code is 201 (OK)
     assert response.status_code == 200
