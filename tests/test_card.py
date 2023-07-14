@@ -64,6 +64,7 @@ def test_listCard(client):
    
 
     #Check that the card was inserted into the database
+    
     card = json.loads(response.get_data(as_text=True))
     
 
@@ -113,18 +114,19 @@ def test_updateCard(client):
     }
         
 
-    # Send a POST request to the update endpoint with the payload
+    # Send a POST request to the updateCard endpoint with the payload
     
     response = client.post('/api/1/updateCard', json=payload)
     
 
     #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
     
 
-    #Check that the booking was inserted into the database
+    #Check that the card was inserted into the database
 
     card = json.loads(response.get_data(as_text=True))
     
@@ -146,7 +148,7 @@ def test_deleteCard(client):
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
    
-    #Check that the booking was inserted into the database
+    #Check that the card was inserted into the database
 
     card = json.loads(response.get_data(as_text=True))
     #print("Card response")

@@ -21,6 +21,7 @@ def client(app):
 def test_createCar(client):
     # Prepare a JSON payload for the request
     #TestUser ID is 6 in schema
+    
     payload = {
                 "uid": 7,
                 "brand": 'Benz',
@@ -64,18 +65,19 @@ def test_updateCar(client):
                 "status": 'Booked',
         }
 
-    # Send a POST request to the updateCar endpoint with the payload
+    #Send a POST request to the updateCar endpoint with the payload
     
     response = client.post('/api/4/updateCar', json=payload)
     
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
     
 
-    # Check that the car was inserted into the database.
+    #Check that the car was inserted into the database.
 
     car = json.loads(response.get_data(as_text=True))
     
@@ -89,14 +91,14 @@ def test_deleteCar(client):
     
     response = client.post('/api/4/deleteCar')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
 
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+    #Add additional assertions to validate the response data or behavior
 
-    # Check that the car was inserted into the database
+    #Check that the car was inserted into the database
 
     car = json.loads(response.get_data(as_text=True))
     
@@ -106,12 +108,12 @@ def test_deleteCar(client):
 
 def test_getCar(client):
     
-    # Send a POST request to the getCar endpoint with the payload
+    #Send a POST request to the getCar endpoint with the payload
 
     response = client.post('/api/3/getCar')
 
     #Check that the response status code is 200 (OK)
-    
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     

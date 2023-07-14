@@ -72,7 +72,7 @@ def test_listFeedback(client):
 def test_listAllFeedback(client):
     # Prepare a JSON payload for the request
 
-    #Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the listallFeedback endpoint with the payload
 
     response = client.post('/api/listAllFeedback')
 
@@ -83,7 +83,7 @@ def test_listAllFeedback(client):
 
     # Add additional assertions to validate the response data or behavior
 
-    #Check that the booking was inserted into the database
+    #Check that the feedback was inserted into the database
 
     feedback = json.loads(response.get_data(as_text=True))
     
@@ -98,7 +98,7 @@ def test_listAllFeedback(client):
 def test_getFeedback(client):
     # Prepare a JSON payload for the request
 
-    #Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the getFeedback endpoint with the payload
 
     response = client.post('/api/1/getFeedback')
 
@@ -109,7 +109,7 @@ def test_getFeedback(client):
 
     # Add additional assertions to validate the response data or behavior
 
-    #Check that the booking was inserted into the database
+    #Check that the feedback was inserted into the database
 
     feedback = json.loads(response.get_data(as_text=True))
     
@@ -144,7 +144,7 @@ def test_updateCard(client):
     
     
 
-    #Check that the booking was inserted into the database
+    #Check that the feedback was inserted into the database
 
     feedback= json.loads(response.get_data(as_text=True))
     
@@ -155,16 +155,19 @@ def test_updateCard(client):
 def test_deleteFeedback(client):
     
     
-    #Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the deleteFeedback endpoint with the payload
+
     response = client.post('/api/1/deleteFeedback')
 
     # Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
     
 
-    #Check that the booking was inserted into the database
+    #Check that the feedback was inserted into the database
+
     feedback = json.loads(response.get_data(as_text=True))
     
     

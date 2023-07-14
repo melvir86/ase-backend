@@ -29,7 +29,7 @@ def test_listJob(client):
     
    
 
-    #Check that the booking was inserted into the database
+    #Check that the job was inserted into the database
 
     job = json.loads(response.get_data(as_text=True))
     
