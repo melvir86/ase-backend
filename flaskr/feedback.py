@@ -16,11 +16,13 @@ bp = Blueprint('feedback', __name__)
 def index():
     return render_template('card/index.html')
 #Getting the feedback of a specific user.
+
 @bp.route('/api/listFeedback', methods=('GET', 'POST'))
 def listFeedback():
     uid = request.args.get('uid')
     db = get_db()
 #Querying the feedback from a specific user.
+
     feedbacks = db.execute(
         'SELECT *'
         ' FROM feedback c JOIN user u ON c.user_id = u.id'
@@ -31,10 +33,12 @@ def listFeedback():
 
     return json.dumps([dict(ix) for ix in feedbacks], indent=4, sort_keys=True, default=str)
 #Getting all the feedbacks.
+
 @bp.route('/api/listAllFeedback', methods=('GET', 'POST'))
 def listAllFeedback():
     db = get_db()
 #Query all the feedback from the tables.
+
     feedbacks = db.execute(
         'SELECT *'
         ' FROM feedback c JOIN user u ON c.user_id = u.id'
@@ -43,10 +47,12 @@ def listAllFeedback():
 
     return json.dumps([dict(ix) for ix in feedbacks], indent=4, sort_keys=True, default=str)
 #Create a new feedback entity for a specific user.
+
 @bp.route('/api/createFeedback', methods=('GET', 'POST'))
 def createFeedback():
     data = request.get_json()
 #Getting all the data from the frontend passed through payloading.
+
     if request.method == 'POST':
         uid = data.get('uid')
         description = data.get('description')
@@ -60,7 +66,9 @@ def createFeedback():
 
         if error is not None:
             flash(error)
-        else:#updating the specific feedback referencing the uid description and feedback.
+        else:
+            #Updating the specific feedback referencing the uid description and feedback.
+
             db = get_db()
             db.execute(
                 'INSERT INTO feedback (user_id, description, feedback)'
@@ -70,9 +78,11 @@ def createFeedback():
             db.commit()
             return json.dumps({'success':True}), 201, {'ContentType':'application/json'}
 #Get a specific feedback function.
+
 @bp.route('/api/<int:id>/getFeedback', methods=('GET', 'POST'))
 def getFeedback(id):
-#query the feedback from the feedback table passing the id as reference.
+#Wuery the feedback from the feedback table passing the id as reference.
+
     feedback = get_db().execute(
         'SELECT *'
         ' FROM feedback f JOIN user u ON f.user_id = u.id'
@@ -102,10 +112,12 @@ def get_feedback_local(id, check_author=True):
 
     return feedback
 #Update a specific feedback function.
+
 @bp.route('/api/<int:id>/updateFeedback', methods=('GET', 'POST'))
 def updateFeedback(id):
     data = request.get_json()
 #Getting the data from the payload.
+
     if request.method == 'POST':
         uid = data.get('uid')
         description = data.get('description')
@@ -122,7 +134,8 @@ def updateFeedback(id):
         if error is not None:
             flash(error)
         else:
-            #update a specific row referencing the uid that is making the change.
+            #Update a specific row referencing the uid that is making the change.
+
             db = get_db()
             db.execute(
                 'UPDATE feedback SET description = ?, feedback = ?'
@@ -132,6 +145,7 @@ def updateFeedback(id):
             db.commit()
             return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 #Same logic as above.
+
 @bp.route('/api/<int:id>/deleteFeedback', methods=('POST',))
 def deleteFeedback(id):
     db = get_db()

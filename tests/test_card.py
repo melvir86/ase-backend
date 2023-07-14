@@ -30,36 +30,40 @@ def test_createCard(client):
         'status': 'Active'
     }
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the createCard endpoint with the payload
+
     response = client.post('/api/createCard', json=payload)
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 201 (OK)
+
     assert response.status_code == 201
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+    
 
-    # Check that the booking was inserted into the database
+    #Check that the card was inserted into the database
+
     card = json.loads(response.get_data(as_text=True))
-    #print("Booking response")
+    #print("Card response")
     
 
     assert b'success' in response.data
 
 
 def test_listCard(client):
-    # Prepare a JSON payload for the request
+    #Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the listCard endpoint with the payload
+
     response = client.post('/api/listCard?uid=6')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    # Add additional assertions to validate the response data or behavior
+   
 
-    # Check that the booking was inserted into the database
+    #Check that the card was inserted into the database
     card = json.loads(response.get_data(as_text=True))
     
 
@@ -69,18 +73,21 @@ def test_listCard(client):
     assert card[0]["cve"] =='123'
 
 def test_getCard(client):
-    # Prepare a JSON payload for the request
+    #Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the getCard endpoint with the payload
+
     response = client.post('/api/1/getCard')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    # Add additional assertions to validate the response data or behavior
+    
 
-    # Check that the booking was inserted into the database
+    #Check that the card was inserted into the database
+
     card = json.loads(response.get_data(as_text=True))
     
 
@@ -106,18 +113,19 @@ def test_updateCard(client):
     }
         
 
-    # Send a POST request to the bookcar endpoint with the payload
+    # Send a POST request to the update endpoint with the payload
     
     response = client.post('/api/1/updateCard', json=payload)
     
 
-    # Check that the response status code is 201 (OK)
+    #Check that the response status code is 200 (OK)
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
     
 
-    # Check that the booking was inserted into the database
+    #Check that the booking was inserted into the database
+
     card = json.loads(response.get_data(as_text=True))
     
 
@@ -128,18 +136,20 @@ def test_updateCard(client):
 def test_deleteCard(client):
     
     
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the deleteCard endpoint with the payload
+
     response = client.post('/api/1/deleteCard')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+   
+    #Check that the booking was inserted into the database
 
-    # Check that the booking was inserted into the database
     card = json.loads(response.get_data(as_text=True))
-    #print("Booking response")
+    #print("Card response")
     
 
     assert b'success' in response.data

@@ -20,6 +20,7 @@ def test_show_cars_success(client):
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     # Add additional assertions to validate the response data
+
     assert b'Mazda' in response.data
     assert b'6' in response.data
     assert b'Mazda' in response.data
@@ -41,9 +42,10 @@ def test_bookcar(client):
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+    
 
     # Check that the booking was inserted into the database
+
     booking = json.loads(response.get_data(as_text=True))
     #print("Booking response")
     #print(booking)
@@ -57,6 +59,7 @@ def test_listRequests(client):
     # Prepare a JSON payload for the request
 
     # Send a POST request to the bookcar endpoint with the payload
+
     response = client.post('/api/listRequests')
 
     # Check that the response status code is 200 (OK)
@@ -66,6 +69,7 @@ def test_listRequests(client):
     # Add additional assertions to validate the response data or behavior
 
     # Check that the booking was inserted into the database
+
     customer_requests = json.loads(response.get_data(as_text=True))
     print(customer_requests)
     #print(response.data)
@@ -81,18 +85,21 @@ def test_acceptJob(client):
     response = client.post('/api/1/acceptJob?carid=3')
 
     # Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    # Add additional assertions to validate the response data or behavior
+    
 
     # Check that the booking was inserted into the database
+
     jobs = json.loads(response.get_data(as_text=True))
 
     assert b'success' in response.data
 
 def test_checkBooking(client):
     # Prepare a JSON payload for the request
+
 
     # Send a POST request to the bookcar endpoint with the payload
     response = client.post('/api/checkBooking?uid=6')
@@ -101,7 +108,7 @@ def test_checkBooking(client):
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    # Add additional assertions to validate the response data or behavior
+    
 
     # Check that the booking was inserted into the database
     booking = json.loads(response.get_data(as_text=True))
@@ -112,19 +119,19 @@ def test_checkBooking(client):
     assert booking[0]["user_id"] == 6
     assert booking[0]["source"] == 'Manchester'
 
-def test_checkBooking(client):
+def test_getCarDeatils(client):
     # Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    # Send a POST request to the getcardetails endpoint with the payload
     response = client.post('/api/7/getCarDetails')
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    # Add additional assertions to validate the response data or behavior
+   
 
-    # Check that the booking was inserted into the database
+    # Check that the car was inserted into the database
     car = json.loads(response.get_data(as_text=True))
     print(car)
 

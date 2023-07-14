@@ -12,10 +12,12 @@ from flask import jsonify
 
 bp = Blueprint('car', __name__)
 #Updating the car details
+
 @bp.route('/api/listCarDetails', methods=('GET', 'POST'))
 def listCarDetails():
     uid = request.args.get('uid')
 #Getting the drivers id to reference its cars.
+
     db = get_db()
     cars = db.execute(
         'SELECT * FROM car WHERE user_id = ?',
@@ -24,10 +26,12 @@ def listCarDetails():
 
     return json.dumps([dict(ix) for ix in cars], indent=4, sort_keys=True, default=str)
 #Creating a new car for the driver.
+
 @bp.route('/api/createCar', methods=('GET', 'POST'))
 def createCar():
     data = request.get_json()
 #Getting all the values from the payload as a form/
+
     if request.method == 'POST':
         uid = data.get('uid')
         brand = data.get('brand')
@@ -46,6 +50,7 @@ def createCar():
             flash(error)
         else:
             #Updating the form values into the table referencing its own uniqe driver id.
+
             db = get_db()
             db.execute(
                 'INSERT INTO car (user_id, brand, model, colour, next_service, status, pos_x, pos_y, rating)'
@@ -55,6 +60,7 @@ def createCar():
             db.commit()
             return json.dumps({'success':True}), 201, {'ContentType':'application/json'}
 #Get the car of a driver.
+
 @bp.route('/api/<int:id>/getCar', methods=('GET', 'POST'))
 def getCar(id):
 #Getting the data of driver and car as their own common key is id which is passed as a filtering query string to get what car we need.
@@ -70,11 +76,13 @@ def getCar(id):
 
     return json.dumps([dict(ix) for ix in car], indent=4, sort_keys=True, default=str)
 #Check if the car exist with its own id to a driver.
+
 def get_car_local(id, check_author=True):
     data = request.get_json()
     if data.get('id'):
         id = data.get('id')
 #check all the records from user and car tables joining through common id passed.
+
     car = get_db().execute(
         'SELECT *'
         ' FROM car c JOIN user u ON c.user_id = u.id'
@@ -87,10 +95,12 @@ def get_car_local(id, check_author=True):
 
     return car
 #Update the car of a driver details.
+
 @bp.route('/api/<int:id>/updateCar', methods=('GET', 'POST'))
 def updateCar(id):
     data = request.get_json()
 #Getting all the data as a payload.
+
     if request.method == 'POST':
         uid = data.get('uid')
         brand = data.get('brand')
@@ -120,6 +130,7 @@ def updateCar(id):
             db.commit()
             return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 #Delete a specific car form the car table.
+
 @bp.route('/api/<int:id>/deleteCar', methods=('POST',))
 def deleteCar(id):
     db = get_db()

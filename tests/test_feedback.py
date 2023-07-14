@@ -18,7 +18,7 @@ def client(app):
 
 
 def test_createFeedback(client):
-    # Prepare a JSON payload for the request
+    #Prepare a JSON payload for the request
     #TestUser ID is 6 in schema
     payload = {
         'uid': 6,
@@ -26,16 +26,19 @@ def test_createFeedback(client):
         'feedback': 'Very nice ride'
     }
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the createFeedback endpoint with the payload
+
     response = client.post('/api/createFeedback', json=payload)
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 201 (OK)
+
     assert response.status_code == 201
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+    
 
-    # Check that the booking was inserted into the database
+    #CCheck that the Feedback was inserted into the database
+
     feedback = json.loads(response.get_data(as_text=True))
     
     #print(feedback)
@@ -45,16 +48,19 @@ def test_createFeedback(client):
 def test_listFeedback(client):
     # Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    # Send a POST request to the listFeedback endpoint with the payload
+
     response = client.post('/api/listFeedback?uid=6')
 
     # Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
     # Add additional assertions to validate the response data or behavior
 
-    # Check that the booking was inserted into the database
+    # Check that the feedback was inserted into the database
+
     feedback = json.loads(response.get_data(as_text=True))
     
 
@@ -66,16 +72,19 @@ def test_listFeedback(client):
 def test_listAllFeedback(client):
     # Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the bookcar endpoint with the payload
+
     response = client.post('/api/listAllFeedback')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
     # Add additional assertions to validate the response data or behavior
 
-    # Check that the booking was inserted into the database
+    #Check that the booking was inserted into the database
+
     feedback = json.loads(response.get_data(as_text=True))
     
 
@@ -89,16 +98,19 @@ def test_listAllFeedback(client):
 def test_getFeedback(client):
     # Prepare a JSON payload for the request
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the bookcar endpoint with the payload
+
     response = client.post('/api/1/getFeedback')
 
-    # Check that the response status code is 200 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
 
     # Add additional assertions to validate the response data or behavior
 
-    # Check that the booking was inserted into the database
+    #Check that the booking was inserted into the database
+
     feedback = json.loads(response.get_data(as_text=True))
     
 
@@ -120,18 +132,20 @@ def test_updateCard(client):
     }
         
 
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the update Feedback endpoint with the payload
     
     response = client.post('/api/1/updateFeedback', json=payload)
     
 
-    # Check that the response status code is 201 (OK)
+    #Check that the response status code is 200 (OK)
+
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
     
 
-    # Check that the booking was inserted into the database
+    #Check that the booking was inserted into the database
+
     feedback= json.loads(response.get_data(as_text=True))
     
 
@@ -141,18 +155,18 @@ def test_updateCard(client):
 def test_deleteFeedback(client):
     
     
-    # Send a POST request to the bookcar endpoint with the payload
+    #Send a POST request to the bookcar endpoint with the payload
     response = client.post('/api/1/deleteFeedback')
 
     # Check that the response status code is 200 (OK)
     assert response.status_code == 200
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
     
-    # Add additional assertions to validate the response data or behavior
+    
 
-    # Check that the booking was inserted into the database
+    #Check that the booking was inserted into the database
     feedback = json.loads(response.get_data(as_text=True))
-    #print("Booking response")
+    
     
 
     assert b'success' in response.data

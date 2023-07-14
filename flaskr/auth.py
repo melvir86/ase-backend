@@ -15,11 +15,13 @@ import functools
 import hashlib
 
 bp = Blueprint('auth', __name__)
-#Register api function
+#Register api function.
+
 @bp.route('/api/register', methods=('GET', 'POST'))
 def register():
     data = request.get_json()
     #Getting the values from posting payload
+
     if request.method == 'POST':
         username = data.get('username')
         password = data.get('password')
@@ -30,8 +32,10 @@ def register():
         print("Password is ", password)
         print("Role is ", role)
 #Encypt the password into md5.
+
         password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
 #Check if any of the textboxes is empty from the form.
+
         if not username:
             error = 'Username is required.'
         elif not password:
@@ -39,6 +43,7 @@ def register():
         elif not role:
             error = 'Role is required.'
 #Inserting the values into user table.
+
         if error is not None:
             flash(error)
         else:
@@ -49,11 +54,13 @@ def register():
             )
             db.commit()
             return json.dumps({'success':True}), 201, {'ContentType':'application/json'}
-#Log in function api
+#Log in function api.
+
 @bp.route('/api/login', methods=('GET', 'POST'))
 def login():
     data = request.get_json()
-#Getting the palyload
+#Getting the palyload.
+
     if request.method == 'POST':
         username = data.get('username')
         password = data.get('password')
@@ -62,6 +69,7 @@ def login():
 
         password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
 #Execture this query into user table.
+
     db = get_db()
     user = db.execute(
         'SELECT * FROM user WHERE username = ? AND password = ? AND role = ?', (username, password_hash, role)
@@ -69,9 +77,11 @@ def login():
 
     return json.dumps([dict(ix) for ix in user], indent=4, sort_keys=True, default=str)
 #load the user templates from their user_id
+
 @bp.route('/api/<int:id>/loadUser', methods=('GET', 'POST'))
 def loadUser(id):
 #Select the user from the query string user id.
+
     user = get_db().execute(
         'SELECT *'
         ' FROM user u'
@@ -79,6 +89,7 @@ def loadUser(id):
         (id,)
     ).fetchall()
 #If the user id doesnt exist on the table return the f string.
+
     if user is None:
         abort(404, f"User id {id} doesn't exist.")
 
