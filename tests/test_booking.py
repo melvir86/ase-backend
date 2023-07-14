@@ -172,8 +172,8 @@ def test_completeBooking(client):
     # Prepare a JSON payload for the request
     #TestUser ID is 6 in schema
     payload = {
-            'source_x': 45,
-            'source_y': 51,
+            'destination_x': 45,
+            'destination_y': 51,
             'car_id': 3,
             'booking_id':1
         }
